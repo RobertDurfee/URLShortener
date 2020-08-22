@@ -1,2 +1,2 @@
 # URLShortener
-A simple, permanent URL shortening service.
+A simple, private, permanent URL shortening service.
