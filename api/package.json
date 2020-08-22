@@ -1,0 +1,27 @@
+{
+  "name": "url-shortener-api",
+  "version": "1.0.0",
+  "description": "REST API for simple, private, permanent URL shortening.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobertDurfee/URLShortener.git"
+  },
+  "keywords": [
+    "url-shortener"
+  ],
+  "author": "Robert Durfee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RobertDurfee/URLShortener/issues"
+  },
+  "homepage": "https://github.com/RobertDurfee/URLShortener#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.6.0",
+    "uuid": "^8.3.0"
+  }
+}
