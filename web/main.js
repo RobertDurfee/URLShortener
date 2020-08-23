@@ -1,3 +1,4 @@
+const os = require('os')
 const express = require('express')
 const fs = require('fs')
 const http = require('http')
@@ -12,15 +13,17 @@ const uuid = require('uuid').v4
 const URLS_API_HOSTNAME = 'api.urls.durfee.io'
 const URLS_API_PORT = 443
 const URLS_RESOURCE_BASE_URI = '/urls'
-const URLS_CA = fs.readFileSync('../ca.cert.pem')
+const URLS_CA = fs.readFileSync(`${os.homedir()}/URLShortener/ca.cert.pem`)
 const STATUS_CODE_OK = 200
 const STATUS_CODE_FOUND = 302
 const STATUS_CODE_NOT_FOUND = 404
 const STATUS_CODE_INTERNAL_SERVER_ERROR = 500
 const STATUS_CODE_PARSE_ERROR = 601
+const STATUS_CODE_GET_ERROR = 602
 const STATUS_NOT_FOUND = 'NOT_FOUND'
 const STATUS_INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR'
 const STATUS_PARSE_ERROR = 'PARSE_ERROR'
+const STATUS_GET_ERROR = 'GET_ERROR'
 const LOG_OPTIONS = {
     'color': true,
     'depth': null,
@@ -92,6 +95,16 @@ const httpsGet = (hostname, port, uri) => {
                 }
             })
         })
+        req.on('error', error => {
+            reject({
+                'error': {
+                    'code': STATUS_CODE_GET_ERROR,
+                    'message': `Unable to perform HTTPS GET request: ${error.message}`,
+                    'status': STATUS_GET_ERROR,
+                }
+            })
+        })
+        req.end()
     })
 }
 
