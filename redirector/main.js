@@ -10,6 +10,7 @@ const uuid = require('uuid').v4
 const MONGO_URL = 'mongodb://localhost:27017'
 const URLS_DB = 'urlsDB'
 const URLS = 'urls'
+const STATUS_CODE_FOUND = 302
 const STATUS_CODE_NOT_FOUND = 404
 const STATUS_CODE_INTERNAL_SERVER_ERROR = 500
 const STATUS_NOT_FOUND = 'NOT_FOUND'
@@ -78,7 +79,7 @@ app.get('/:resourceId', (req, res) => {
                 'id': `${result['id']}`,
                 'url': `${result['url']}`
             }
-            res.redirect(`${result['url']}`).json(body)
+            res.status(STATUS_CODE_FOUND).set('Location', `${result['url']}`).json(body)
             logResponse(id, res, body)
         } else {
             const body = {
