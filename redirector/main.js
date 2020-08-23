@@ -78,7 +78,7 @@ app.get('/:resourceId', (req, res) => {
                 'id': `${result['id']}`,
                 'url': `${result['url']}`
             }
-            res.redirect(`${result['url']}`)
+            res.redirect(`${result['url']}`).json(body)
             logResponse(id, res, body)
         } else {
             const body = {
