@@ -33,11 +33,15 @@ var urlsDB
 ////////////////////////////////////////////////////////////////////////////////
 
 const convert = count => {
-    const character = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+    if (!count) {
+        return '2'
+    }
+    // intentionally excluding '0', '1', 'i', 'l', and 'o'
+    const character = '23456789abcdefghjkmnpqrstuvwxyz'
     var id = ''
     while (count) {
-        id = `${character[count % 62]}${id}`
-        count = Math.trunc(count / 62)
+        id = `${character[count % 31]}${id}`
+        count = Math.trunc(count / 31)
     }
     return id
 }
@@ -59,7 +63,7 @@ const logRequest = (id, req) => {
     }, LOG_OPTIONS)
 }
 
-const logResponse = (id, req, body) => {
+const logResponse = (id, res, body) => {
     console.dir({
         'id': id,
         'response': {
@@ -88,12 +92,12 @@ app.get('/urls/:resourceId', (req, res) => {
     const id = uuid()
     logRequest(id, req)
     urlsDB.collection(URLS).findOne({
-        'id': req.params['resourceId']
+        'id': req.params['resourceId'].toLowerCase()
     }).then(result => {
-        if (result.value) {
+        if (result) {
             const body = {
-                'id': `${result.value['id']}`,
-                'url': `${result.value['url']}`
+                'id': `${result['id']}`,
+                'url': `${result['url']}`
             }
             res.status(STATUS_CODE_OK).json(body)
             logResponse(id, res, body)
@@ -116,7 +120,7 @@ app.get('/urls/:resourceId', (req, res) => {
                 'status': STATUS_INTERNAL_SERVER_ERROR
             }
         }
-        res.status(INTERNAL_SERVER_ERROR).json(body)
+        res.status(STATUS_CODE_INTERNAL_SERVER_ERROR).json(body)
         logResponse(id, res, body)
     })
 })

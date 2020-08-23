@@ -1,7 +1,7 @@
 {
   "name": "url-shortener-api",
   "version": "1.0.0",
-  "description": "REST API for simple, private, permanent URL shortening.",
+  "description": "REST API for simple URL shortening.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
