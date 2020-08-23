@@ -1,7 +1,7 @@
 {
-  "name": "url-shortener-redirector",
+  "name": "url-shortener-web",
   "version": "1.0.0",
-  "description": "Redirector for simple URL shortening.",
+  "description": "Web interface for simple URL shortening.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
