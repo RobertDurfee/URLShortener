@@ -184,7 +184,7 @@ app.post('/urls', (req, res) => {
 
 MongoClient.connect(MONGO_URL, { useUnifiedTopology: true }).then(client => {
     urlsDB = client.db(URLS_DB)
-    http.createServer(app).listen(8005)
+    http.createServer(app).listen(8006)
 }).catch(error => {
     console.error(error)
     process.exit(1)
